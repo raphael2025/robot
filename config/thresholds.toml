@@ -1,0 +1,75 @@
+# Robot Thresholds — Percentile-Based Calibration (30d Binance BTCUSDT 1m)
+# Percentile-based: thresholds computed as rolling percentiles over lookback.
+# This makes thresholds adaptive to market regime.
+
+[sampling]
+lookback = 20              # rolling window for features + percentile calculation
+min_samples = 15           # min bars before computing rolling features
+
+[feature_percentiles]
+ar_pct_high = 90            # AR upper percentile for accumulation signal  (≥ p90 = 0.607)
+ar_pct_low  = 10            # AR lower percentile for distribution signal (≤ p10 = 0.399)
+vpin_pct    = 90            # VPIN percentile for liquidity/abnormal activity (≥ p90 = 0.344)
+ss_pct      = 90            # Spread strength percentile (≥ p90 = 0.310)
+oi_pct_low  = 5             # OI lower percentile — sell-pressure absorption (≤ p05 = -0.277)
+
+[signals]
+# ── ABSORPTION ──────────────────────────────────────────────────────────
+# Institution buying aggressively (AR upper pct) + high VPIN (informed flow) + low OI (passive selling absorbed)
+# → price flat, next bars go up
+absorption_ar_pct     = 90
+absorption_vpin_pct   = 85
+absorption_oi_pct_max = 30
+absorption_consecutive = 3
+absorption_conf_base  = 0.60
+
+# ── DISTRIBUTION ─────────────────────────────────────────────────────────
+# Low AR (passive selling) + high OI (buy pressure being absorbed) + high VPIN
+# → price flat, next bars go DOWN (instaed of up — institution distributing)
+distribution_ar_pct     = 10
+distribution_vpin_pct  = 85
+distribution_oi_pct_min = 70
+distribution_consecutive = 3
+distribution_conf_base  = 0.60
+
+# ── LIQUIDITY_PROBE ──────────────────────────────────────────────────────
+# Very high VPIN + high SS → smart money testing / hunting stop-losses
+# → price typically breaks, then reverses
+liquidity_vpin_pct  = 90
+liquidity_ss_pct    = 85
+liquidity_consecutive = 2
+liquidity_conf_base = 0.55
+
+# ── MICRO_DRIFT ───────────────────────────────────────────────────────────
+# Continuous upward Micro-Price drift (OI rising) → institution quietly accumulating
+micro_drift_oi_pct_min  = 80
+micro_drift_consecutive = 3
+micro_drift_conf_base   = 0.60
+
+# ── BULL_TRAP ─────────────────────────────────────────────────────────────
+# Price pumped + high VPIN + institution not supporting → next bar reverses down
+bull_trap_ta_min_bps    = 3.0     # positive return bps
+bull_trap_vpin_pct     = 85
+bull_trap_consecutive  = 1       # single bar triggers, confirmed by next bar reversal
+bull_trap_conf_base    = 0.60
+bull_trap_post_ret_max  = 0.5     # next bar must reverse (ret within ±0.5bps = flat)
+
+# ── BEAR_TRAP ─────────────────────────────────────────────────────────────
+# Price dropped + high VPIN + no institution support → next bar reverses up
+bear_trap_ta_max_bps    = -3.0
+bear_trap_vpin_pct     = 85
+bear_trap_consecutive   = 1
+bear_trap_conf_base     = 0.60
+bear_trap_post_ret_min  = -0.5    # next bar must reverse up
+
+[confidence_scoring]
+# How much each feature's percentile rank contributes to confidence score
+ar_excess_weight   = 0.30
+vpin_excess_weight = 0.25
+oi_excess_weight   = 0.20
+ret_score_weight   = 0.15
+consecutive_bonus  = 0.10   # added per additional consecutive bar beyond minimum
+
+[filtering]
+confidence_min = 0.60       # minimum confidence to emit a signal
+signal_cooldown_bars = 5   # after a signal, skip this many bars before new signal of same type
