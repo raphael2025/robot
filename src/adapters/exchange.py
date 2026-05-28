@@ -18,7 +18,7 @@ import numpy as np
 import websockets
 from websockets.exceptions import ConnectionClosed
 
-from src.core.orderflow import OrderBookLevel, OrderBookSnap, Trade
+from core.orderflow import OrderBookLevel, OrderBookSnap, Trade
 
 log = logging.getLogger("adapter")
 

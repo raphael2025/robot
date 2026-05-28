@@ -788,7 +788,8 @@ class BinanceWebSocket:
             trade_id=int(payload['a']),
         )
         self.detector.update_trade(trade)
-        self.on_trade(trade)
+        if self.on_trade is not None:
+            self.on_trade(trade)
 
     def _handle_depth(self, payload: dict):
         """处理 depth 消息 (Binance @depth20@100ms)."""
@@ -797,7 +798,8 @@ class BinanceWebSocket:
         update_id = int(payload.get('u', payload.get('lastUpdateId', 0)))
 
         self.detector.update_depth(bids_raw, asks_raw, update_id)
-        self.on_depth(bids_raw, asks_raw)
+        if self.on_depth is not None:
+            self.on_depth(bids_raw, asks_raw)
 
         # 检测信号
         signal = self.detector.detect()
