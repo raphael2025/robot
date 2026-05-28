@@ -1,201 +1,181 @@
 """
-signal_validator.py
-====================
-追踪实盘信号触发后的价格走向，验证框架是否准确。
-
-对每个触发的信号，记录触发价格 + 之后1/3/5分钟的价格变化。
-最后汇总：每个信号类型的胜率、平均盈亏。
+signal_validator.py — 简化版，直接用requests轮询Binance REST API
 """
-import asyncio
-import json
-import sys
-import time
+import asyncio, json, time, sys, os, urllib.request
 from collections import defaultdict
 
 sys.path.insert(0, '/home/raphael/robot/src')
 sys.path.insert(0, '/home/raphael/robot')
 
-from core.orderflow_detector import IntentDetector, Intent
-from adapters.exchange import BinanceAdapter
+from core.orderflow_detector import IntentDetector, Intent, TradeEvent
 
 
-class SignalValidator:
-    def __init__(self, symbol: str, poll_interval: int = 5, warmup_seconds: int = 60):
-        self.symbol = symbol
-        self.poll_interval = poll_interval
-        self.warmup = warmup_seconds
-        self.detector = IntentDetector()
-        self.binance = BinanceAdapter(symbol)
-        self.signals: list[dict] = []
-        self.price_history: list[dict] = []  # {'ts': unix, 'price': mid}
-        self.running = False
-
-    async def _price_recorder(self):
-        """后台持续记录价格快照（每5秒）"""
-        while self.running:
-            try:
-                ob = await self.binance.fetch_orderbook_snapshot(limit=20)
-                if ob['bids'] and ob['asks']:
-                    mid = (float(ob['bids'][0][0]) + float(ob['asks'][0][0])) / 2
-                    self.price_history.append({'ts': time.time(), 'price': mid})
-            except Exception:
-                pass
-            await asyncio.sleep(self.poll_interval)
-
-    def _get_price_at(self, ts: float) -> float | None:
-        """找到 >= ts 的第一个价格"""
-        for p in self.price_history:
-            if p['ts'] >= ts:
-                return p['price']
+def fetch_binance_ob(symbol: str) -> dict | None:
+    try:
+        url = f"https://api.binance.com/api/v3/depth?symbol={symbol.upper()}&limit=20"
+        with urllib.request.urlopen(url, timeout=5) as r:
+            return json.loads(r.read())
+    except Exception as e:
         return None
 
-    async def run(self, duration_s: int = 300):
-        self.running = True
-        recorder = asyncio.create_task(self._price_recorder())
-        await asyncio.sleep(self.warmup)  # 先预热积累数据
 
-        print(f"Signal tracking started — {duration_s}s window, checking 1m/3m/5m outcomes...")
-        start_ts = time.time()
-        last_print = 0
-
-        while time.time() - start_ts < duration_s:
-            try:
-                trades = await self.binance.fetch_recent_trades(limit=50)
-                depth = await self.binance.fetch_orderbook_snapshot(limit=20)
-
-                for t in trades:
-                    self.detector.update_trade({
-                        'price': float(t['price']),
-                        'size': float(t['qty']),
-                        'is_buyer_maker': t.get('is_buyer_maker', False),
-                        'ts': int(t['time']),
-                    })
-
-                if depth['bids'] and depth['asks']:
-                    bids = [[b[0], b[1]] for b in depth['bids']]
-                    asks = [[a[0], a[1]] for a in depth['asks']]
-                    self.detector.update_depth(bids, asks, update_id=depth.get('lastUpdateId', 0))
-
-                sig = self.detector.detect()
-                if sig:
-                    trigger_price = sig.price
-                    now = time.time()
-                    self.signals.append({
-                        'ts': now,
-                        'intent': sig.intent.value,
-                        'confidence': sig.confidence,
-                        'trigger_price': trigger_price,
-                        'metadata': sig.metadata,
-                    })
-                    print(f"  SIGNAL {sig.intent.value:15s} @ {trigger_price:.2f}  conf={sig.confidence:.0%}")
-
-                if time.time() - last_print > 30:
-                    print(f"  [{int(time.time()-start_ts)}s] tracked {len(self.signals)} signals, {len(self.price_history)} price samples")
-                    last_print = time.time()
-
-            except Exception as e:
-                print(f"  error: {e}")
-
-            await asyncio.sleep(self.poll_interval)
-
-        self.running = False
-        recorder.cancel()
-        await asyncio.sleep(0.5)
-        self._report()
-
-    def _report(self):
-        print("\n" + "=" * 70)
-        print("SIGNAL VALIDATION REPORT")
-        print("=" * 70)
-
-        if not self.signals:
-            print("No signals triggered.")
-            return
-
-        outcomes = defaultdict(lambda: {'1m': [], '3m': [], '5m': []})
-        confirm = defaultdict(lambda: {'total': 0, 'correct': 0, 'wrong': 0, 'inconclusive': 0})
-
-        for sig in self.signals:
-            intent = sig['intent']
-            trigger_ts = sig['ts']
-            trigger_price = sig['trigger_price']
-
-            for label, delta in [('1m', 60), ('3m', 180), ('5m', 300)]:
-                future_ts = trigger_ts + delta
-                future_price = self._get_price_at(future_ts)
-                if future_price:
-                    pct = (future_price - trigger_price) / trigger_price * 100
-                    outcomes[intent][label].append(pct)
-
-            # 判断正确性
-            confirm[intent]['total'] += 1
-            p1m = outcomes[intent]['1m']
-            if p1m:
-                last_ret = p1m[-1]  # 1分钟后价格变化
-
-                if intent == 'accumulating':
-                    # 主动买入+价格不跟涨 → 应该涨
-                    correct = last_ret > 0.001
-                elif intent == 'distributing':
-                    # 主动卖出+价格不跟跌 → 应该跌
-                    correct = last_ret < -0.001
-                elif intent == 'bull_trap':
-                    # 被动卖单撤 → 准备砸盘（看空）
-                    correct = last_ret < -0.001
-                elif intent == 'bear_trap':
-                    # 被动买单撤 → 准备拉升（看多）
-                    correct = last_ret > 0.001
-                elif intent == 'liquidity_probe':
-                    # 大单挂而不成交 → 方向不明，看是否收复
-                    correct = abs(last_ret) < 0.01  # 窄幅横盘=诱导成功
-                elif intent == 'micro_drift':
-                    # micro_price偏 → 方向跟随micro_price
-                    mp = sig['metadata'].get('micro_price', trigger_price)
-                    correct = (future_price - trigger_price) * (mp - trigger_price) > 0
-                else:
-                    correct = None
-
-                if correct is True:
-                    confirm[intent]['correct'] += 1
-                elif correct is False:
-                    confirm[intent]['wrong'] += 1
-                else:
-                    confirm[intent]['inconclusive'] += 1
-
-        print(f"\n{'Signal':<20} {'N':>4}  {'1m avg%':>10}  {'3m avg%':>10}  {'5m avg%':>10}  {'WinRate':>10}")
-        print("-" * 70)
-        for intent in ['accumulating', 'distributing', 'bull_trap', 'bear_trap', 'liquidity_probe', 'micro_drift']:
-            data = outcomes[intent]
-            n = len(data['1m'])
-            if n == 0:
-                continue
-            avg1 = sum(data['1m']) / n
-            avg3 = sum(data['3m']) / n if data['3m'] else 0
-            avg5 = sum(data['5m']) / n if data['5m'] else 0
-            c = confirm[intent]
-            wr = c['correct'] / max(c['total'], 1)
-            print(f"{intent:<20} {n:>4}  {avg1:>+10.4f}  {avg3:>+10.4f}  {avg5:>+10.4f}  {wr:>10.1%}")
-
-        print()
-        for intent, c in confirm.items():
-            total = c['total']
-            if total == 0:
-                continue
-            wr = c['correct'] / total
-            print(f"  {intent}: {c['correct']}/{total} correct ({wr:.0%})")
+def fetch_binance_trades(symbol: str) -> list:
+    try:
+        url = f"https://api.binance.com/api/v3/trades?symbol={symbol.upper()}&limit=100"
+        with urllib.request.urlopen(url, timeout=5) as r:
+            return json.loads(r.read())
+    except Exception:
+        return []
 
 
-async def main():
-    import argparse
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--symbol', default='btcusdt')
-    parser.add_argument('--duration', type=int, default=300)
-    parser.add_argument('--poll', type=int, default=5)
-    args = parser.parse_args()
+async def run(symbol: str, duration_s: int, poll_s: int):
+    warmup = 30
+    results = {'symbol': symbol, 'start_ts': time.time(), 'signals': [], 'price_log': []}
+    detector = IntentDetector()
 
-    v = SignalValidator(args.symbol, poll_interval=args.poll, warmup_seconds=60)
-    await v.run(duration_s=args.duration)
+    print(f"[0s] Warming up {warmup}s...")
+    await asyncio.sleep(warmup)
+
+    print(f"[{warmup}s] Validation start — {duration_s}s, poll every {poll_s}s")
+    start = time.time()
+    last_report = start
+
+    while time.time() - start < duration_s:
+        loop = time.time()
+
+        ob = fetch_binance_ob(symbol)
+        trades_raw = fetch_binance_trades(symbol)
+
+        for i, t in enumerate(trades_raw):
+            # isBuyerMaker=True → seller was taker → aggressive sell → side="sell"
+            # isBuyerMaker=False → buyer was taker → aggressive buy → side="buy"
+            side = "sell" if t['isBuyerMaker'] else "buy"
+            detector.update_trade(TradeEvent(
+                price=float(t['price']),
+                size=float(t['qty']),
+                side=side,
+                is_buyer_maker=t['isBuyerMaker'],
+                ts=t['time'],
+                trade_id=t.get('id', i),
+            ))
+
+        if ob and ob['bids'] and ob['asks']:
+            bids = [[b[0], b[1]] for b in ob['bids']]
+            asks = [[a[0], a[1]] for a in ob['asks']]
+            detector.update_depth(bids, asks, update_id=ob['lastUpdateId'])
+
+            mid = (float(ob['bids'][0][0]) + float(ob['asks'][0][0])) / 2
+            results['price_log'].append({'ts': time.time(), 'mid': mid})
+
+        sig = detector.detect()
+        now = time.time()
+        if sig:
+            results['signals'].append({
+                'ts': now, 'intent': sig.intent.value,
+                'confidence': sig.confidence,
+                'trigger_mid': mid if ob else sig.price,
+                'metadata': sig.metadata,
+            })
+            print(f"  SIGNAL {sig.intent.value:18s} conf={sig.confidence:.0%} mid={mid:.2f}")
+
+        if now - last_report >= 60:
+            print(f"  [{int(now-start)}s] signals={len(results['signals'])} prices={len(results['price_log'])}")
+            last_report = now
+
+        elapsed = time.time() - loop
+        await asyncio.sleep(max(poll_s - elapsed, 1))
+
+    results['end_ts'] = time.time()
+
+    # ANALYSIS
+    print("\n" + "=" * 70)
+    print("RESULTS")
+    print("=" * 70)
+
+    outcomes = defaultdict(lambda: {'1m': [], '3m': [], '5m': []})
+    verdict = defaultdict(lambda: {'correct': 0, 'wrong': 0, 'pending': 0})
+
+    def price_after(ts, delta):
+        for p in results['price_log']:
+            if p['ts'] >= ts + delta:
+                return p['mid']
+        return None
+
+    for sig in results['signals']:
+        intent = sig['intent']
+        trigger = sig['trigger_mid']
+        sig_ts = sig['ts']
+
+        for label, delta in [('1m', 60), ('3m', 180), ('5m', 300)]:
+            fp = price_after(sig_ts, delta)
+            if fp:
+                outcomes[intent][label].append((fp - trigger) / trigger * 100)
+
+        p1 = price_after(sig_ts, 60)
+        if p1 is None:
+            verdict[intent]['pending'] += 1
+            continue
+
+        ret1 = (p1 - trigger) / trigger * 100
+        correct = None
+        if intent == 'accumulating':
+            correct = ret1 > 0.01
+        elif intent == 'distributing':
+            correct = ret1 < -0.01
+        elif intent == 'bull_trap':
+            correct = ret1 < -0.01
+        elif intent == 'bear_trap':
+            correct = ret1 > 0.01
+        elif intent == 'liquidity_probe':
+            correct = abs(ret1) < 0.05
+        elif intent == 'micro_drift':
+            direction = sig['metadata'].get('direction', 'neutral')
+            correct = (ret1 > 0) if direction == 'bid_heavy' else (ret1 < 0) if direction == 'ask_heavy' else None
+
+        if correct is True:
+            verdict[intent]['correct'] += 1
+        elif correct is False:
+            verdict[intent]['wrong'] += 1
+
+    elapsed = results['end_ts'] - results['start_ts']
+    print(f"\nDuration: {elapsed:.0f}s  Signals: {len(results['signals'])}  Prices: {len(results['price_log'])}\n")
+
+    print(f"{'Intent':<20} {'N':>4}  {'1m avg%':>10}  {'3m avg%':>10}  {'5m avg%':>10}  {'WinRate':>10}")
+    print("-" * 72)
+    for intent in ['accumulating','distributing','bull_trap','bear_trap','liquidity_probe','micro_drift']:
+        d1, d3, d5 = outcomes[intent]['1m'], outcomes[intent]['3m'], outcomes[intent]['5m']
+        n = len(d1)
+        if n == 0: continue
+        avg1 = sum(d1)/n
+        avg3 = sum(d3)/n if d3 else float('nan')
+        avg5 = sum(d5)/n if d5 else float('nan')
+        v = verdict[intent]
+        total_v = v['correct'] + v['wrong']
+        wr = v['correct'] / total_v if total_v > 0 else float('nan')
+        print(f"{intent:<20} {n:>4}  {avg1:>+10.4f}  {avg3:>+10.4f}  {avg5:>+10.4f}  {wr:>10.1%}")
+
+    print()
+    for intent, v in verdict.items():
+        total = v['correct'] + v['wrong'] + v['pending']
+        if total == 0: continue
+        wr = v['correct'] / max(v['correct'] + v['wrong'], 1)
+        print(f"  {intent}: {v['correct']}/{v['correct']+v['wrong']} correct ({wr:.0%})  pending={v['pending']}")
+
+    os.makedirs('/home/raphael/robot/results', exist_ok=True)
+    ts = int(results['start_ts'])
+    out = f"/home/raphael/robot/results/{symbol}_validation_{ts}.txt"
+    with open(out, 'w') as f:
+        f.write(f"Symbol: {symbol}\nStart: {time.ctime(results['start_ts'])}\nDuration: {elapsed:.0f}s\nSignals: {len(results['signals'])}\n\n")
+        for sig in results['signals']:
+            f.write(f"[{time.ctime(sig['ts'])}] {sig['intent']:20s} conf={sig['confidence']:.0%} mid={sig['trigger_mid']:.2f}\n")
+    print(f"\nSaved: {out}")
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    import argparse
+    p = argparse.ArgumentParser()
+    p.add_argument('--symbol', default='btcusdt')
+    p.add_argument('--duration', type=int, default=300)
+    p.add_argument('--poll', type=int, default=5)
+    args = p.parse_args()
+    asyncio.run(run(args.symbol, args.duration, args.poll))

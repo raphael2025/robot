@@ -1,0 +1,5 @@
+Symbol: btcusdt
+Start: Thu May 28 18:04:12 2026
+Duration: 345s
+Signals: 0
+

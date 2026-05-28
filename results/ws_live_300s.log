@@ -1,0 +1,417 @@
+Starting live detection for BTCUSDT for 300s...
+  WebSocket: btcusdt@aggTrade + btcusdt@depth20@100ms
+  Thresholds: passive_size=5BTC, cancel=2BTC, micro_drift=2bps, vol_ratio=1.5x
+
+[18:11:42]  buy_ratio=0.000 OI=-1.00  VPIN=0.000  vol_x=0.0  p_ask=0.137 p_bid=4.912  spread=0.01  mp=72905.02  mid=72905.02  drift=0.00bps  n=0
+
+*** 18:11:43  ACCUMULATING      conf=90%  price=72905.03
+    buy_ratio: 0.9
+    oi: 0.8
+    vpin: 0.8
+    recent_ret_pct: 0.0
+    vol_ratio: 1.8
+    spread: 0.01
+    type: buy_pressure_no_price_rise
+
+*** 18:11:45  DISTRIBUTING      conf=58%  price=0.10502
+    buy_ratio: 0.135
+    recent_ret_pct: 0.0
+    vol_ratio: 2.86
+    type: sell_pressure_no_price_drop
+[18:11:46]  buy_ratio=0.189 OI=-0.62  VPIN=0.621  vol_x=1.8  p_ask=0.127 p_bid=4.873  spread=0.01  mp=72905.02  mid=72905.02  drift=0.00bps  n=36
+[18:11:49]  buy_ratio=0.182 OI=-0.64  VPIN=0.636  vol_x=0.0  p_ask=0.134 p_bid=3.949  spread=0.01  mp=72905.02  mid=72905.02  drift=0.00bps  n=55
+
+*** 18:11:51  BEAR_TRAP         conf=97%  price=72920.0
+    passive_bid_before: 6.38993
+    passive_bid_after: 0.29908
+    cancel_delta: 6.09085
+    type: passive_bid_withdrawal
+[18:11:52]  buy_ratio=0.473 OI=-0.06  VPIN=0.055  vol_x=0.2  p_ask=3.572 p_bid=0.558  spread=0.01  mp=72917.0  mid=72916.99  drift=0.00bps  n=199
+[18:11:55]  buy_ratio=0.559 OI=+0.12  VPIN=0.119  vol_x=0.0  p_ask=0.521 p_bid=0.458  spread=0.01  mp=72916.99  mid=72916.99  drift=0.00bps  n=203
+[18:11:58]  buy_ratio=0.561 OI=+0.12  VPIN=0.122  vol_x=0.1  p_ask=0.129 p_bid=0.418  spread=0.01  mp=72917.0  mid=72916.99  drift=0.00bps  n=211
+
+*** 18:11:59  BULL_TRAP         conf=100%  price=72910.6
+    passive_ask_before: 12.68236
+    passive_ask_after: 0.15101
+    cancel_delta: 12.53135
+    type: passive_ask_withdrawal
+[18:12:01]  buy_ratio=0.577 OI=+0.15  VPIN=0.154  vol_x=2.3  p_ask=0.126 p_bid=1.308  spread=0.01  mp=72918.0  mid=72918.01  drift=0.00bps  n=312
+
+*** 18:12:02  BEAR_TRAP         conf=100%  price=72918.0
+    passive_bid_before: 12.38188
+    passive_bid_after: 0.63867
+    cancel_delta: 11.743210000000001
+    type: passive_bid_withdrawal
+[18:12:04]  buy_ratio=0.596 OI=+0.19  VPIN=0.192  vol_x=0.8  p_ask=0.114 p_bid=5.234  spread=0.01  mp=72918.0  mid=72918.01  drift=0.00bps  n=342
+
+*** 18:12:04  ACCUMULATING      conf=66%  price=72928.01
+    buy_ratio: 0.738
+    oi: 0.477
+    vpin: 0.477
+    recent_ret_pct: 0.0005
+    vol_ratio: 3.85
+    spread: 0.01
+    type: buy_pressure_no_price_rise
+
+*** 18:12:05  BEAR_TRAP         conf=100%  price=72941.16
+    passive_bid_before: 11.42653
+    passive_bid_after: 2.38961
+    cancel_delta: 9.03692
+    type: passive_bid_withdrawal
+[18:12:07]  buy_ratio=0.747 OI=+0.49  VPIN=0.495  vol_x=0.0  p_ask=0.108 p_bid=0.802  spread=0.01  mp=72941.16  mid=72941.17  drift=0.00bps  n=531
+
+*** 18:12:08  ACCUMULATING      conf=68%  price=72941.17
+    buy_ratio: 0.752
+    oi: 0.505
+    vpin: 0.505
+    recent_ret_pct: 0.0
+    vol_ratio: 2.83
+    spread: 0.01
+    type: buy_pressure_no_price_rise
+[18:12:10]  buy_ratio=0.755 OI=+0.51  VPIN=0.510  vol_x=0.1  p_ask=0.183 p_bid=1.867  spread=0.01  mp=72942.5  mid=72942.51  drift=0.00bps  n=557
+
+*** 18:12:11  BEAR_TRAP         conf=83%  price=72942.5
+    passive_bid_before: 6.14846
+    passive_bid_after: 0.9619300000000001
+    cancel_delta: 5.18653
+    type: passive_bid_withdrawal
+
+*** 18:12:13  ACCUMULATING      conf=69%  price=72942.51
+    buy_ratio: 0.762
+    oi: 0.523
+    vpin: 0.523
+    recent_ret_pct: 0.0
+    vol_ratio: 9.89
+    spread: 0.01
+    type: buy_pressure_no_price_rise
+[18:12:13]  buy_ratio=0.766 OI=+0.53  VPIN=0.532  vol_x=0.3  p_ask=0.115 p_bid=5.700  spread=0.01  mp=72943.84  mid=72943.85  drift=0.00bps  n=591
+
+*** 18:12:16  BEAR_TRAP         conf=42%  price=72943.84
+    passive_bid_before: 5.70006
+    passive_bid_after: 3.09911
+    cancel_delta: 2.6009499999999997
+    type: passive_bid_withdrawal
+[18:12:16]  buy_ratio=0.770 OI=+0.54  VPIN=0.541  vol_x=0.0  p_ask=0.218 p_bid=3.181  spread=0.01  mp=72943.84  mid=72943.85  drift=0.00bps  n=605
+
+*** 18:12:18  ACCUMULATING      conf=71%  price=72943.85
+    buy_ratio: 0.771
+    oi: 0.541
+    vpin: 0.541
+    recent_ret_pct: 0.0
+    vol_ratio: 4.04
+    spread: 0.01
+    type: buy_pressure_no_price_rise
+[18:12:19]  buy_ratio=0.770 OI=+0.54  VPIN=0.540  vol_x=0.7  p_ask=0.312 p_bid=1.537  spread=0.01  mp=72943.84  mid=72943.85  drift=0.00bps  n=628
+[18:12:22]  buy_ratio=0.766 OI=+0.53  VPIN=0.532  vol_x=1.4  p_ask=0.412 p_bid=1.474  spread=0.01  mp=72943.85  mid=72943.85  drift=0.00bps  n=634
+
+*** 18:12:25  ACCUMULATING      conf=70%  price=72945.26
+    buy_ratio: 0.769
+    oi: 0.538
+    vpin: 0.538
+    recent_ret_pct: 0.0
+    vol_ratio: 4.65
+    spread: 0.01
+    type: buy_pressure_no_price_rise
+[18:12:25]  buy_ratio=0.771 OI=+0.54  VPIN=0.542  vol_x=4.7  p_ask=0.129 p_bid=3.745  spread=0.01  mp=72945.62  mid=72945.62  drift=0.00bps  n=661
+
+*** 18:12:26  BEAR_TRAP         conf=91%  price=72952.0
+    passive_bid_before: 6.20101
+    passive_bid_after: 0.50299
+    cancel_delta: 5.69802
+    type: passive_bid_withdrawal
+[18:12:28]  buy_ratio=0.814 OI=+0.63  VPIN=0.628  vol_x=0.1  p_ask=3.861 p_bid=0.204  spread=0.01  mp=72952.01  mid=72952.01  drift=0.00bps  n=714
+
+*** 18:12:28  ACCUMULATING      conf=71%  price=72948.72
+    buy_ratio: 0.767
+    oi: 0.534
+    vpin: 0.534
+    recent_ret_pct: -0.0017
+    vol_ratio: 3.32
+    spread: 0.01
+    type: buy_pressure_no_price_rise
+
+*** 18:12:29  BULL_TRAP         conf=100%  price=72943.85
+    passive_ask_before: 13.677719999999999
+    passive_ask_after: 2.47323
+    cancel_delta: 11.20449
+    type: passive_ask_withdrawal
+
+*** 18:12:29  ACCUMULATING      conf=70%  price=72943.85
+    buy_ratio: 0.769
+    oi: 0.537
+    vpin: 0.537
+    recent_ret_pct: -0.0002
+    vol_ratio: 13.3
+    spread: 0.01
+    type: buy_pressure_no_price_rise
+
+*** 18:12:30  BULL_TRAP         conf=100%  price=72943.85
+    passive_ask_before: 13.677719999999999
+    passive_ask_after: 2.49729
+    cancel_delta: 11.18043
+    type: passive_ask_withdrawal
+[18:12:31]  buy_ratio=0.768 OI=+0.54  VPIN=0.535  vol_x=0.8  p_ask=0.776 p_bid=1.121  spread=0.01  mp=72943.84  mid=72943.85  drift=0.00bps  n=762
+[18:12:34]  buy_ratio=0.752 OI=+0.50  VPIN=0.504  vol_x=0.7  p_ask=0.097 p_bid=0.753  spread=0.01  mp=72933.33  mid=72933.33  drift=0.00bps  n=826
+
+*** 18:12:35  BULL_TRAP         conf=100%  price=72933.33
+    passive_ask_before: 9.19108
+    passive_ask_after: 0.09704
+    cancel_delta: 9.09404
+    type: passive_ask_withdrawal
+
+*** 18:12:37  ACCUMULATING      conf=67%  price=72933.33
+    buy_ratio: 0.747
+    oi: 0.493
+    vpin: 0.493
+    recent_ret_pct: 0.0
+    vol_ratio: 1.86
+    spread: 0.01
+    type: buy_pressure_no_price_rise
+[18:12:37]  buy_ratio=0.747 OI=+0.49  VPIN=0.493  vol_x=1.9  p_ask=0.151 p_bid=0.475  spread=0.01  mp=72933.33  mid=72933.33  drift=0.00bps  n=833
+[18:12:40]  buy_ratio=0.746 OI=+0.49  VPIN=0.492  vol_x=0.0  p_ask=0.135 p_bid=0.482  spread=0.01  mp=72933.33  mid=72933.33  drift=0.00bps  n=837
+
+*** 18:12:43  BULL_TRAP         conf=100%  price=72928.01
+    passive_ask_before: 11.01452
+    passive_ask_after: 1.62727
+    cancel_delta: 9.38725
+    type: passive_ask_withdrawal
+[18:12:43]  buy_ratio=0.732 OI=+0.46  VPIN=0.464  vol_x=8.1  p_ask=1.526 p_bid=0.208  spread=0.01  mp=72928.01  mid=72928.01  drift=0.00bps  n=864
+[18:12:47]  buy_ratio=0.734 OI=+0.47  VPIN=0.467  vol_x=0.0  p_ask=0.797 p_bid=0.553  spread=0.01  mp=72928.0  mid=72928.01  drift=0.00bps  n=872
+
+*** 18:12:47  ACCUMULATING      conf=65%  price=72928.01
+    buy_ratio: 0.736
+    oi: 0.471
+    vpin: 0.471
+    recent_ret_pct: 0.0
+    vol_ratio: 6.14
+    spread: 0.01
+    type: buy_pressure_no_price_rise
+[18:12:50]  buy_ratio=0.736 OI=+0.47  VPIN=0.472  vol_x=0.3  p_ask=0.883 p_bid=0.420  spread=0.01  mp=72928.01  mid=72928.01  drift=0.00bps  n=880
+[18:12:53]  buy_ratio=0.736 OI=+0.47  VPIN=0.473  vol_x=0.9  p_ask=0.274 p_bid=0.243  spread=0.01  mp=72928.01  mid=72928.01  drift=0.00bps  n=883
+[18:12:56]  buy_ratio=0.736 OI=+0.47  VPIN=0.473  vol_x=0.0  p_ask=0.720 p_bid=0.509  spread=0.01  mp=72928.0  mid=72928.01  drift=0.00bps  n=884
+
+*** 18:12:57  ACCUMULATING      conf=65%  price=72928.01
+    buy_ratio: 0.734
+    oi: 0.469
+    vpin: 0.469
+    recent_ret_pct: -0.0
+    vol_ratio: 3.85
+    spread: 0.01
+    type: buy_pressure_no_price_rise
+[18:12:59]  buy_ratio=0.733 OI=+0.47  VPIN=0.466  vol_x=0.1  p_ask=0.828 p_bid=0.511  spread=0.01  mp=72928.01  mid=72928.01  drift=0.00bps  n=893
+[18:13:02]  buy_ratio=0.733 OI=+0.47  VPIN=0.465  vol_x=0.1  p_ask=0.111 p_bid=0.813  spread=0.01  mp=72928.0  mid=72928.01  drift=0.00bps  n=900
+
+*** 18:13:02  ACCUMULATING      conf=65%  price=72928.01
+    buy_ratio: 0.733
+    oi: 0.466
+    vpin: 0.466
+    recent_ret_pct: 0.0
+    vol_ratio: 2.21
+    spread: 0.01
+    type: buy_pressure_no_price_rise
+[18:13:05]  buy_ratio=0.736 OI=+0.47  VPIN=0.472  vol_x=0.1  p_ask=0.115 p_bid=0.396  spread=0.01  mp=72928.0  mid=72928.01  drift=0.00bps  n=912
+
+*** 18:13:08  BEAR_TRAP         conf=100%  price=72936.0
+    passive_bid_before: 12.26693
+    passive_bid_after: 1.8171
+    cancel_delta: 10.44983
+    type: passive_bid_withdrawal
+[18:13:08]  buy_ratio=0.777 OI=+0.55  VPIN=0.554  vol_x=0.1  p_ask=0.050 p_bid=1.835  spread=0.01  mp=72936.0  mid=72936.01  drift=0.00bps  n=985
+
+*** 18:13:09  ACCUMULATING      conf=72%  price=72941.29
+    buy_ratio: 0.779
+    oi: 0.558
+    vpin: 0.558
+    recent_ret_pct: 0.0004
+    vol_ratio: 5.28
+    spread: 0.01
+    type: buy_pressure_no_price_rise
+
+*** 18:13:10  BEAR_TRAP         conf=76%  price=72943.99
+    passive_bid_before: 5.80853
+    passive_bid_after: 1.04692
+    cancel_delta: 4.76161
+    type: passive_bid_withdrawal
+[18:13:11]  buy_ratio=0.779 OI=+0.56  VPIN=0.558  vol_x=0.0  p_ask=0.703 p_bid=0.004  spread=0.01  mp=72944.0  mid=72943.99  drift=0.00bps  n=1000
+
+*** 18:13:12  BULL_TRAP         conf=100%  price=72927.28
+    passive_ask_before: 7.56787
+    passive_ask_after: 0.53367
+    cancel_delta: 7.0342
+    type: passive_ask_withdrawal
+[18:13:14]  buy_ratio=0.754 OI=+0.51  VPIN=0.509  vol_x=0.1  p_ask=0.118 p_bid=1.189  spread=0.01  mp=72928.0  mid=72928.01  drift=0.00bps  n=1000
+[18:13:17]  buy_ratio=0.754 OI=+0.51  VPIN=0.508  vol_x=0.9  p_ask=0.120 p_bid=1.227  spread=0.01  mp=72928.0  mid=72928.01  drift=0.00bps  n=1000
+
+*** 18:13:19  ACCUMULATING      conf=51%  price=72920.97
+    buy_ratio: 0.639
+    oi: 0.279
+    vpin: 0.279
+    recent_ret_pct: -0.0009
+    vol_ratio: 8.52
+    spread: 2.43
+    type: buy_pressure_no_price_rise
+[18:13:20]  buy_ratio=0.585 OI=+0.17  VPIN=0.170  vol_x=0.1  p_ask=5.342 p_bid=0.495  spread=0.01  mp=72906.4  mid=72906.4  drift=0.00bps  n=1000
+
+*** 18:13:20  BULL_TRAP         conf=100%  price=72906.41
+    passive_ask_before: 15.18159
+    passive_ask_after: 1.86867
+    cancel_delta: 13.31292
+    type: passive_ask_withdrawal
+[18:13:23]  buy_ratio=0.585 OI=+0.17  VPIN=0.169  vol_x=1.9  p_ask=1.744 p_bid=0.042  spread=0.01  mp=72906.41  mid=72906.4  drift=0.00bps  n=1000
+[18:13:26]  buy_ratio=0.469 OI=-0.06  VPIN=0.062  vol_x=0.0  p_ask=7.290 p_bid=0.145  spread=0.01  mp=72879.6  mid=72879.6  drift=0.00bps  n=1000
+
+*** 18:13:26  BULL_TRAP         conf=100%  price=72879.6
+    passive_ask_before: 18.70025
+    passive_ask_after: 1.21731
+    cancel_delta: 17.48294
+    type: passive_ask_withdrawal
+[18:13:29]  buy_ratio=0.480 OI=-0.04  VPIN=0.040  vol_x=0.3  p_ask=0.150 p_bid=1.931  spread=0.01  mp=72889.98  mid=72889.99  drift=0.00bps  n=1000
+
+*** 18:13:30  BEAR_TRAP         conf=80%  price=72896.0
+    passive_bid_before: 7.44882
+    passive_bid_after: 2.46374
+    cancel_delta: 4.98508
+    type: passive_bid_withdrawal
+[18:13:32]  buy_ratio=0.493 OI=-0.01  VPIN=0.014  vol_x=3.1  p_ask=0.031 p_bid=5.116  spread=0.01  mp=72903.06  mid=72903.07  drift=0.00bps  n=1000
+[18:13:35]  buy_ratio=0.498 OI=-0.00  VPIN=0.003  vol_x=1.5  p_ask=0.248 p_bid=1.367  spread=0.01  mp=72908.34  mid=72908.35  drift=0.00bps  n=1000
+
+*** 18:13:35  BEAR_TRAP         conf=60%  price=72908.34
+    passive_bid_before: 5.11866
+    passive_bid_after: 1.36705
+    cancel_delta: 3.7516100000000003
+    type: passive_bid_withdrawal
+[18:13:38]  buy_ratio=0.505 OI=+0.01  VPIN=0.011  vol_x=1.2  p_ask=0.152 p_bid=4.593  spread=0.01  mp=72912.0  mid=72912.01  drift=0.00bps  n=1000
+
+*** 18:13:41  BEAR_TRAP         conf=72%  price=72921.99
+    passive_bid_before: 5.8254
+    passive_bid_after: 1.35548
+    cancel_delta: 4.46992
+    type: passive_bid_withdrawal
+[18:13:41]  buy_ratio=0.511 OI=+0.02  VPIN=0.022  vol_x=4.4  p_ask=0.241 p_bid=1.251  spread=0.01  mp=72921.99  mid=72921.99  drift=0.00bps  n=1000
+[18:13:44]  buy_ratio=0.500 OI=-0.00  VPIN=0.000  vol_x=0.0  p_ask=6.274 p_bid=0.163  spread=0.01  mp=72911.29  mid=72911.29  drift=0.00bps  n=1000
+
+*** 18:13:45  BULL_TRAP         conf=100%  price=72904.55
+    passive_ask_before: 11.929060000000002
+    passive_ask_after: 1.69202
+    cancel_delta: 10.237040000000002
+    type: passive_ask_withdrawal
+[18:13:47]  buy_ratio=0.496 OI=-0.01  VPIN=0.008  vol_x=1.2  p_ask=0.353 p_bid=0.347  spread=0.01  mp=72897.25  mid=72897.24  drift=0.00bps  n=1000
+[18:13:50]  buy_ratio=0.495 OI=-0.01  VPIN=0.010  vol_x=0.1  p_ask=0.588 p_bid=0.129  spread=0.01  mp=72889.96  mid=72889.96  drift=0.00bps  n=1000
+[18:13:53]  buy_ratio=0.524 OI=+0.05  VPIN=0.048  vol_x=19.7  p_ask=0.616 p_bid=0.117  spread=0.01  mp=72889.96  mid=72889.96  drift=0.00bps  n=1000
+[18:13:57]  buy_ratio=0.525 OI=+0.05  VPIN=0.049  vol_x=0.0  p_ask=0.173 p_bid=0.412  spread=0.01  mp=72889.96  mid=72889.96  drift=0.00bps  n=1000
+[18:14:00]  buy_ratio=0.527 OI=+0.06  VPIN=0.055  vol_x=0.1  p_ask=0.424 p_bid=0.404  spread=0.01  mp=72889.95  mid=72889.96  drift=0.00bps  n=1000
+[18:14:03]  buy_ratio=0.528 OI=+0.06  VPIN=0.056  vol_x=0.1  p_ask=0.296 p_bid=0.374  spread=0.01  mp=72889.96  mid=72889.96  drift=0.00bps  n=1000
+[18:14:06]  buy_ratio=0.530 OI=+0.06  VPIN=0.060  vol_x=0.3  p_ask=0.124 p_bid=0.406  spread=0.01  mp=72889.95  mid=72889.96  drift=0.00bps  n=1000
+[18:14:09]  buy_ratio=0.531 OI=+0.06  VPIN=0.063  vol_x=0.0  p_ask=0.139 p_bid=0.336  spread=0.01  mp=72889.96  mid=72889.96  drift=0.00bps  n=1000
+[18:14:12]  buy_ratio=0.531 OI=+0.06  VPIN=0.062  vol_x=0.0  p_ask=0.057 p_bid=0.416  spread=0.01  mp=72889.95  mid=72889.96  drift=0.00bps  n=1000
+[18:14:15]  buy_ratio=0.534 OI=+0.07  VPIN=0.068  vol_x=0.1  p_ask=0.520 p_bid=0.354  spread=0.01  mp=72889.96  mid=72889.96  drift=0.00bps  n=1000
+[18:14:18]  buy_ratio=0.534 OI=+0.07  VPIN=0.068  vol_x=0.0  p_ask=0.494 p_bid=0.285  spread=0.01  mp=72889.96  mid=72889.96  drift=0.00bps  n=1000
+[18:14:21]  buy_ratio=0.537 OI=+0.07  VPIN=0.074  vol_x=1.4  p_ask=0.200 p_bid=4.452  spread=0.01  mp=72889.95  mid=72889.96  drift=0.00bps  n=1000
+[18:14:24]  buy_ratio=0.536 OI=+0.07  VPIN=0.072  vol_x=0.0  p_ask=0.724 p_bid=0.083  spread=0.01  mp=72889.96  mid=72889.96  drift=0.00bps  n=1000
+[18:14:27]  buy_ratio=0.535 OI=+0.07  VPIN=0.070  vol_x=0.1  p_ask=0.355 p_bid=0.468  spread=0.01  mp=72889.96  mid=72889.96  drift=0.00bps  n=1000
+[18:14:30]  buy_ratio=0.535 OI=+0.07  VPIN=0.070  vol_x=0.1  p_ask=0.231 p_bid=0.420  spread=0.01  mp=72889.95  mid=72889.96  drift=0.00bps  n=1000
+[18:14:33]  buy_ratio=0.535 OI=+0.07  VPIN=0.070  vol_x=0.0  p_ask=0.451 p_bid=0.055  spread=0.01  mp=72889.96  mid=72889.96  drift=0.00bps  n=1000
+[18:14:36]  buy_ratio=0.527 OI=+0.05  VPIN=0.054  vol_x=0.5  p_ask=5.357 p_bid=0.028  spread=0.01  mp=72876.51  mid=72876.51  drift=0.00bps  n=1000
+
+*** 18:14:38  BULL_TRAP         conf=80%  price=72864.56
+    passive_ask_before: 5.83997
+    passive_ask_after: 0.82024
+    cancel_delta: 5.01973
+    type: passive_ask_withdrawal
+[18:14:39]  buy_ratio=0.491 OI=-0.02  VPIN=0.017  vol_x=0.0  p_ask=0.654 p_bid=0.736  spread=0.01  mp=72864.56  mid=72864.55  drift=0.00bps  n=1000
+[18:14:42]  buy_ratio=0.492 OI=-0.02  VPIN=0.016  vol_x=0.0  p_ask=0.486 p_bid=1.214  spread=0.01  mp=72864.56  mid=72864.55  drift=0.00bps  n=1000
+[18:14:45]  buy_ratio=0.464 OI=-0.07  VPIN=0.073  vol_x=0.0  p_ask=8.646 p_bid=0.025  spread=0.01  mp=72861.93  mid=72861.92  drift=0.00bps  n=1000
+
+*** 18:14:45  BULL_TRAP         conf=100%  price=72861.93
+    passive_ask_before: 22.50581
+    passive_ask_after: 1.11836
+    cancel_delta: 21.38745
+    type: passive_ask_withdrawal
+[18:14:48]  buy_ratio=0.463 OI=-0.07  VPIN=0.073  vol_x=0.0  p_ask=1.813 p_bid=0.240  spread=0.01  mp=72861.93  mid=72861.92  drift=0.00bps  n=1000
+[18:14:51]  buy_ratio=0.463 OI=-0.07  VPIN=0.073  vol_x=0.0  p_ask=0.867 p_bid=1.143  spread=0.01  mp=72861.92  mid=72861.92  drift=0.00bps  n=1000
+[18:14:54]  buy_ratio=0.464 OI=-0.07  VPIN=0.073  vol_x=0.0  p_ask=0.851 p_bid=1.001  spread=0.01  mp=72861.92  mid=72861.92  drift=0.00bps  n=1000
+[18:14:57]  buy_ratio=0.455 OI=-0.09  VPIN=0.089  vol_x=15.6  p_ask=0.851 p_bid=0.735  spread=0.01  mp=72861.92  mid=72861.92  drift=0.00bps  n=1000
+[18:15:00]  buy_ratio=0.456 OI=-0.09  VPIN=0.088  vol_x=0.2  p_ask=0.851 p_bid=0.779  spread=0.01  mp=72861.92  mid=72861.92  drift=0.00bps  n=1000
+[18:15:03]  buy_ratio=0.456 OI=-0.09  VPIN=0.089  vol_x=0.8  p_ask=0.843 p_bid=0.535  spread=0.01  mp=72861.92  mid=72861.92  drift=0.00bps  n=1000
+[18:15:07]  buy_ratio=0.483 OI=-0.03  VPIN=0.034  vol_x=2.8  p_ask=0.046 p_bid=8.294  spread=0.01  mp=72863.02  mid=72863.02  drift=0.00bps  n=1000
+[18:15:10]  buy_ratio=0.481 OI=-0.04  VPIN=0.038  vol_x=0.0  p_ask=0.122 p_bid=3.467  spread=0.01  mp=72863.02  mid=72863.02  drift=0.00bps  n=1000
+
+*** 18:15:10  BEAR_TRAP         conf=95%  price=72878.0
+    passive_bid_before: 6.05576
+    passive_bid_after: 0.09955
+    cancel_delta: 5.9562100000000004
+    type: passive_bid_withdrawal
+
+*** 18:15:12  BULL_TRAP         conf=96%  price=72869.92
+    passive_ask_before: 6.29537
+    passive_ask_after: 0.3132
+    cancel_delta: 5.98217
+    type: passive_ask_withdrawal
+
+*** 18:15:13  BEAR_TRAP         conf=87%  price=72869.91
+    passive_bid_before: 6.05576
+    passive_bid_after: 0.62439
+    cancel_delta: 5.43137
+    type: passive_bid_withdrawal
+[18:15:13]  buy_ratio=0.491 OI=-0.02  VPIN=0.019  vol_x=0.2  p_ask=0.438 p_bid=0.624  spread=0.01  mp=72869.91  mid=72869.92  drift=0.00bps  n=1000
+
+*** 18:15:13  BULL_TRAP         conf=94%  price=72869.92
+    passive_ask_before: 6.29537
+    passive_ask_after: 0.43756
+    cancel_delta: 5.85781
+    type: passive_ask_withdrawal
+[18:15:16]  buy_ratio=0.492 OI=-0.02  VPIN=0.016  vol_x=0.7  p_ask=0.040 p_bid=4.469  spread=0.01  mp=72869.91  mid=72869.92  drift=0.00bps  n=1000
+[18:15:19]  buy_ratio=0.492 OI=-0.02  VPIN=0.016  vol_x=0.2  p_ask=0.102 p_bid=4.479  spread=0.01  mp=72869.91  mid=72869.92  drift=0.00bps  n=1000
+[18:15:22]  buy_ratio=0.490 OI=-0.02  VPIN=0.019  vol_x=0.0  p_ask=3.760 p_bid=0.187  spread=0.01  mp=72869.42  mid=72869.42  drift=0.00bps  n=1000
+[18:15:25]  buy_ratio=0.492 OI=-0.01  VPIN=0.015  vol_x=0.2  p_ask=0.034 p_bid=6.361  spread=0.01  mp=72869.9  mid=72869.9  drift=0.00bps  n=1000
+
+*** 18:15:26  BEAR_TRAP         conf=72%  price=72869.9
+    passive_bid_before: 6.67174
+    passive_bid_after: 2.18662
+    cancel_delta: 4.48512
+    type: passive_bid_withdrawal
+[18:15:28]  buy_ratio=0.494 OI=-0.01  VPIN=0.012  vol_x=1.3  p_ask=0.114 p_bid=1.830  spread=0.01  mp=72869.9  mid=72869.9  drift=0.00bps  n=1000
+[18:15:31]  buy_ratio=0.503 OI=+0.01  VPIN=0.006  vol_x=4.4  p_ask=0.053 p_bid=4.285  spread=0.01  mp=72878.0  mid=72878.01  drift=0.00bps  n=1000
+[18:15:34]  buy_ratio=0.503 OI=+0.01  VPIN=0.006  vol_x=0.8  p_ask=0.054 p_bid=5.594  spread=0.01  mp=72878.0  mid=72878.01  drift=0.00bps  n=1000
+
+*** 18:15:35  BEAR_TRAP         conf=66%  price=72878.0
+    passive_bid_before: 5.5942099999999995
+    passive_bid_after: 1.48892
+    cancel_delta: 4.105289999999999
+    type: passive_bid_withdrawal
+
+*** 18:15:36  BULL_TRAP         conf=86%  price=72876.03
+    passive_ask_before: 5.61106
+    passive_ask_after: 0.26691
+    cancel_delta: 5.34415
+    type: passive_ask_withdrawal
+[18:15:37]  buy_ratio=0.500 OI=-0.00  VPIN=0.000  vol_x=0.0  p_ask=0.291 p_bid=0.956  spread=0.01  mp=72876.03  mid=72876.02  drift=0.00bps  n=1000
+[18:15:40]  buy_ratio=0.501 OI=+0.00  VPIN=0.001  vol_x=0.6  p_ask=0.296 p_bid=0.558  spread=0.01  mp=72876.03  mid=72876.02  drift=0.00bps  n=1000
+[18:15:43]  buy_ratio=0.500 OI=+0.00  VPIN=0.001  vol_x=2.5  p_ask=0.525 p_bid=0.425  spread=0.01  mp=72876.03  mid=72876.02  drift=0.00bps  n=1000
+[18:15:46]  buy_ratio=0.491 OI=-0.02  VPIN=0.017  vol_x=0.6  p_ask=0.242 p_bid=4.243  spread=0.01  mp=72864.56  mid=72864.57  drift=0.00bps  n=1000
+[18:15:49]  buy_ratio=0.492 OI=-0.02  VPIN=0.017  vol_x=0.1  p_ask=0.522 p_bid=3.163  spread=0.01  mp=72864.56  mid=72864.57  drift=0.00bps  n=1000
+[18:15:52]  buy_ratio=0.486 OI=-0.03  VPIN=0.029  vol_x=0.1  p_ask=1.084 p_bid=0.248  spread=0.01  mp=72852.01  mid=72852.01  drift=0.00bps  n=1000
+
+*** 18:15:52  BULL_TRAP         conf=100%  price=72852.01
+    passive_ask_before: 12.61651
+    passive_ask_after: 1.08383
+    cancel_delta: 11.53268
+    type: passive_ask_withdrawal
+[18:15:55]  buy_ratio=0.487 OI=-0.03  VPIN=0.026  vol_x=0.1  p_ask=0.428 p_bid=0.219  spread=0.01  mp=72852.01  mid=72852.01  drift=0.00bps  n=1000
+[18:15:58]  buy_ratio=0.488 OI=-0.03  VPIN=0.025  vol_x=0.0  p_ask=0.199 p_bid=0.201  spread=0.01  mp=72852.0  mid=72852.01  drift=0.00bps  n=1000
+[18:16:01]  buy_ratio=0.488 OI=-0.03  VPIN=0.025  vol_x=0.1  p_ask=0.605 p_bid=2.129  spread=0.01  mp=72852.0  mid=72852.01  drift=0.00bps  n=1000
+[18:16:04]  buy_ratio=0.475 OI=-0.05  VPIN=0.050  vol_x=0.1  p_ask=13.558 p_bid=0.031  spread=0.01  mp=72832.77  mid=72832.76  drift=0.00bps  n=1000
+
+*** 18:16:05  BULL_TRAP         conf=100%  price=72832.77
+    passive_ask_before: 15.83155
+    passive_ask_after: 0.06689
+    cancel_delta: 15.76466
+    type: passive_ask_withdrawal
+
+*** 18:16:07  BEAR_TRAP         conf=89%  price=72833.21
+    passive_bid_before: 5.69437
+    passive_bid_after: 0.12757000000000002
+    cancel_delta: 5.5668
+    type: passive_bid_withdrawal
+[18:16:07]  buy_ratio=0.480 OI=-0.04  VPIN=0.039  vol_x=0.0  p_ask=0.251 p_bid=0.127  spread=0.01  mp=72833.22  mid=72833.21  drift=0.00bps  n=1000
+[18:16:10]  buy_ratio=0.480 OI=-0.04  VPIN=0.039  vol_x=1.4  p_ask=0.355 p_bid=0.053  spread=0.01  mp=72833.22  mid=72833.21  drift=0.00bps  n=1000
